@@ -1,39 +1,54 @@
 import os
 
+dict1 = {}
+
 
 def userpath():
     while True:
-        path = "C:\\abc"
-        if os.path.exists(path):
+        path1 = 'C:\\abc'
+        if os.path.exists(path1):
             break
         else:
             print("Вы не правильно ввели путь")
-    return path
+    return path1
+
 
 def dict(path):
-    dict1 = {}
     for i in os.listdir(path):
-        if os.path.isdir(path + i):
-            dict1[path + "\\" + i] = os.path.getsize(path + "\\" + i)
+        file = os.path.join(path, i)
+        if os.path.isdir(file):
+            dict(file)
         else:
-            dict(path + "\\" + i)
-    print(dict) 
-           
-
-def dubl():
-    pass
-
-def console():
-    pass
-
-dict(userpath())
+            dict1[file] = os.path.getsize(file)
+    return dict1
 
 
-# a = {
-#     1:41,
-#     2:22,
-#     3:3
-# }
-# a[1] = "gssefd"
-# print(a[])
+def dubl(dict1):
+    name = []
+    weight = []
+    for a in dict1.keys():
+        name.append(os.path.basename(a))
+    for b in dict1.values():
+        weight.append(b)
+    double = {}
+    for i in range(len(name)):
+        count = 0
+        for j in range(len(name)):
+            if name[i] == name[j]:
+                if weight[i] == weight[j]:
+                    count += 1
+                double[name[i]] = count
+    print(double)
+    print(name)
+    print(weight)
+    return double
 
+
+def console(double):
+    for a, b in double.items():
+        if b > 1:
+            print(a + ': ' + str(b))
+
+
+if __name__ == '__main__':
+    (console(dubl(dict(userpath()))))
